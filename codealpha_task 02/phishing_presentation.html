@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Awareness Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .presentation-container {
+            max-width: 900px;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            text-align: center;
+            min-height: 600px;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .slide h2 {
+            font-size: 2em;
+            color: #e74c3c;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+
+        .slide ul {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-box {
+            background: #d1ecf1;
+            border: 2px solid #bee5eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example-email {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .red-flag {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .quiz-question {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .quiz-option {
+            background: #fff;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+        }
+
+        .quiz-option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #0056b3;
+        }
+
+        .nav-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e9ecef;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-counter">1 / 9</div>
+            <div class="emoji">🎣🚫</div>
+            <h1>Phishing Awareness Training</h1>
+            <p style="font-size: 1.4em; color: #7f8c8d;">Protecting Yourself and Your Organization from Cyber Threats</p>
+            <div class="tip-box">
+                <p><strong>Duration:</strong> 15 minutes | <strong>Goal:</strong> Learn to identify and avoid phishing attacks</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="nextSlide()">Start Training →</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: What is Phishing? -->
+        <div class="slide">
+            <div class="slide-counter">2 / 9</div>
+            <div class="emoji">🎣</div>
+            <h2>What is Phishing?</h2>
+            <div class="warning-box">
+                <p><strong>Phishing</strong> is a cybercrime where attackers impersonate trusted entities to steal sensitive information like passwords, credit card numbers, or personal data.</p>
+            </div>
+            <ul>
+                <li><strong>Goal:</strong> Trick you into revealing confidential information</li>
+                <li><strong>Method:</strong> Fake emails, websites, texts, or calls</li>
+                <li><strong>Target:</strong> Personal data, login credentials, financial info</li>
+                <li><strong>Impact:</strong> Identity theft, financial loss, data breaches</li>
+            </ul>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Spotting Phishing Emails -->
+        <div class="slide">
+            <div class="slide-counter">3 / 9</div>
+            <div class="emoji">📧⚠️</div>
+            <h2>How to Spot Phishing Emails</h2>
+            <ul>
+                <li><span class="red-flag">Urgent language</span> - "Act now!" or "Account will be closed!"</li>
+                <li><span class="red-flag">Generic greetings</span> - "Dear Customer" instead of your name</li>
+                <li><span class="red-flag">Suspicious sender</span> - Check email address carefully</li>
+                <li><span class="red-flag">Poor grammar/spelling</span> - Professional companies proofread</li>
+                <li><span class="red-flag">Unexpected attachments</span> - Don't open if not expected</li>
+                <li><span class="red-flag">Suspicious links</span> - Hover to preview destination</li>
+            </ul>
+            <div class="tip-box">
+                <p><strong>Pro Tip:</strong> When in doubt, contact the company directly through their official website or phone number.</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Fake Websites -->
+        <div class="slide">
+            <div class="slide-counter">4 / 9</div>
+            <div class="emoji">🌐🚫</div>
+            <h2>Identifying Fake Websites</h2>
+            <ul>
+                <li><strong>Check the URL carefully</strong> - Look for misspellings (amazom.com vs amazon.com)</li>
+                <li><strong>Look for HTTPS</strong> - Secure sites have a lock icon in the address bar</li>
+                <li><strong>Examine the design</strong> - Poor quality graphics or layout</li>
+                <li><strong>Verify contact information</strong> - Legitimate sites have clear contact details</li>
+                <li><strong>Check for typos</strong> - Professional sites are well-written</li>
+                <li><strong>Trust your instincts</strong> - If something feels off, it probably is</li>
+            </ul>
+            <div class="warning-box">
+                <p><strong>Never enter sensitive information</strong> on suspicious websites!</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Social Engineering -->
+        <div class="slide">
+            <div class="slide-counter">5 / 9</div>
+            <div class="emoji">🎭</div>
+            <h2>Social Engineering Tactics</h2>
+            <p>Attackers use psychological manipulation to trick people:</p>
+            <ul>
+                <li><strong>Authority:</strong> Pretending to be your boss, IT department, or government</li>
+                <li><strong>Urgency:</strong> Creating false deadlines to pressure quick action</li>
+                <li><strong>Fear:</strong> Threatening account closure or legal action</li>
+                <li><strong>Curiosity:</strong> "You've won a prize!" or "See who viewed your profile"</li>
+                <li><strong>Trust:</strong> Impersonating friends, colleagues, or familiar brands</li>
+                <li><strong>Helpfulness:</strong> Offering to "help" with a problem you didn't know you had</li>
+            </ul>
+            <div class="tip-box">
+                <p><strong>Remember:</strong> Legitimate organizations won't ask for sensitive information via email or phone.</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 6: Best Practices -->
+        <div class="slide">
+            <div class="slide-counter">6 / 9</div>
+            <div class="emoji">🛡️</div>
+            <h2>Best Practices & Tips</h2>
+            <ul>
+                <li><strong>Verify before you trust</strong> - Contact the sender through official channels</li>
+                <li><strong>Use strong, unique passwords</strong> - Enable two-factor authentication</li>
+                <li><strong>Keep software updated</strong> - Install security patches promptly</li>
+                <li><strong>Think before you click</strong> - Hover over links to see where they lead</li>
+                <li><strong>Report suspicious emails</strong> - Forward to your IT security team</li>
+                <li><strong>Educate others</strong> - Share knowledge with family and colleagues</li>
+                <li><strong>Trust your gut</strong> - If something seems fishy, it probably is!</li>
+            </ul>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 7: Real-World Example -->
+        <div class="slide">
+            <div class="slide-counter">7 / 9</div>
+            <div class="emoji">📨</div>
+            <h2>Real-World Example</h2>
+            <div class="example-email">
+                <strong>From:</strong> security-alert@amazom.com<br>
+                <strong>Subject:</strong> URGENT: Your account has been compromised!<br><br>
+                Dear Customer,<br><br>
+                We detected unusual activity on you're account. Your account will be suspended in 24 hours unless you verify your information immediately.<br><br>
+                <span class="red-flag">Click here to verify now</span><br><br>
+                Amazon Security Team
+            </div>
+            <div class="warning-box">
+                <p><strong>Red Flags:</strong> Wrong domain (amazom.com), poor grammar, urgent language, generic greeting, suspicious link</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Interactive Quiz -->
+        <div class="slide">
+            <div class="slide-counter">8 / 9</div>
+            <div class="emoji">🧠</div>
+            <h2>Knowledge Check</h2>
+            <div id="quiz-container">
+                <div class="quiz-question">
+                    <p><strong>Question 1:</strong> Which of these is a red flag in an email?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="selectAnswer(this, false)">Professional greeting with your name</div>
+                        <div class="quiz-option" onclick="selectAnswer(this, true)">Urgent language demanding immediate action</div>
+                        <div class="quiz-option" onclick="selectAnswer(this, false)">Company logo and branding</div>
+                        <div class="quiz-option" onclick="selectAnswer(this, false)">Clear contact information</div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="nextSlide()">Finish →</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: Thank You -->
+        <div class="slide">
+            <div class="slide-counter">9 / 9</div>
+            <div class="emoji">🎉</div>
+            <h1>Thank You!</h1>
+            <p style="font-size: 1.4em; margin-bottom: 30px;">You're now better equipped to spot and avoid phishing attacks!</p>
+            <div class="tip-box">
+                <p><strong>Remember:</strong> When in doubt, don't click! Verify through official channels.</p>
+            </div>
+            <h2 style="margin-top: 40px;">Questions & Discussion</h2>
+            <p>What phishing attempts have you encountered? Let's discuss!</p>
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlide()">← Back</button>
+                <button class="nav-btn" onclick="resetPresentation()">Start Over</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            updateProgress();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function resetPresentation() {
+            showSlide(0);
+        }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function selectAnswer(element, isCorrect) {
+            // Remove previous selections
+            const options = element.parentNode.querySelectorAll('.quiz-option');
+            options.forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+
+            // Mark the selected answer
+            if (isCorrect) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+                // Show the correct answer
+                options.forEach(option => {
+                    if (option.onclick.toString().includes('true')) {
+                        option.classList.add('correct');
+                    }
+                });
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Initialize progress bar
+        updateProgress();
+    </script>
+</body>
+</html>
